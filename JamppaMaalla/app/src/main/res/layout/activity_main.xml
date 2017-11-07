@@ -31,8 +31,8 @@
         android:id="@+id/starttinappi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="Käynnistä ruohonleikkuri"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="104dp"
-        android:text="Aloita peli" />
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
