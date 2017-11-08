@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button aloitusNappi;
     ImageView alkukuvaView;
+    private Display ruutu;
+    private Point ruutukoko;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +45,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void piirraAlkuvalikko(){
         // get display object. Display = size and density of a logical display
-        Display ruutu = getWindowManager().getDefaultDisplay();
+        ruutu = getWindowManager().getDefaultDisplay();
 
         // get resolution
-        Point ruutukoko = new Point();   // point = two integer coordinates
+        ruutukoko = new Point();   // point = two integer coordinates
         ruutu.getSize(ruutukoko);      // gets display size = current _app window_ size
 
 
@@ -73,6 +75,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Bitmap tausta = BitmapFactory.decodeResource(getResources(), R.drawable.jmm_logo);
         // aseta "tausta" canvasiin
         canvas.drawBitmap(tausta,0,0,null);
+
+        // "nurmikko"
+        maali.setColor(Color.parseColor("#008800"));
+        canvas.drawRect(0,900,ruutukoko.x,ruutukoko.y,maali);
+
 
         // otetaan pikselin väri tausta-bitmapista ja "peittomaali":n arvoksi
         int pikseli = tausta.getPixel(20,20);
@@ -106,32 +113,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         // fontin koon määrittely. Lasketaan ensin suhdeluku ruudun koon perusteella
-        double kuvasuhde = (Math.sqrt(canvas.getWidth() * canvas.getHeight()))/1200;
+        double kuvasuhde = (Math.sqrt(canvas.getWidth() * canvas.getHeight()))/1600;
         // tekstin koko
         maali.setTextSize((float) (getResources().getDimensionPixelSize(R.dimen.fonttikoko) * kuvasuhde));
         // text
-        canvas.drawText("screen size: "+ruutukoko.x+" x " + ruutukoko.y,20,ruutukoko.y-50,maali);
+        canvas.drawText("screen size: "+ruutukoko.x+" x " + ruutukoko.y,20,ruutukoko.y-30,maali);
 
 
         // smooths out the edges of what is being drawn
-        maali.setColor(Color.GREEN);
         maali.setAntiAlias(true);
+
+        // vaihdetaan läpikuultava väri ympyrälle
+        maali.setColor(Color.argb(50, 255, 0, 0));
+        canvas.drawCircle(1300,900,500,maali);
+
         //  transfer mode defines how source pixels are composited with the destination pixels(target content)
         maali.setXfermode(new PorterDuffXfermode(Mode.ADD));
+        // vaihdetaan läpikuultava väri ympyrälle
+        maali.setColor(Color.argb(150, 255, 0, 0));
+        canvas.drawCircle(1500,150,400,maali);
 
-        canvas.drawCircle(1200,700,300,maali);
 
         // väripallot
-        int alpha = 255;
+        int alpha = 200;
         int r = Color.argb(alpha, 255, 0, 0);
         int g = Color.argb(alpha, 0, 255, 0);
         int b = Color.argb(alpha, 0, 0, 255);
-        maali.setColor(r);
-        canvas.drawCircle(300,430,50,maali);
-        maali.setColor(g);
-        canvas.drawCircle(330,470,50,maali);
         maali.setColor(b);
-        canvas.drawCircle(270,470,50,maali);
+        canvas.drawCircle(320,320,70,maali);
+        maali.setColor(g);
+        canvas.drawCircle(340,400,70,maali);
+        maali.setColor(r);
+        canvas.drawCircle(260,380,70,maali);
 
 
         // liitetään bitmappi view:hun
@@ -173,7 +186,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view){
-        // pelin aloitus napista -> uusi intent GameActivity-luokasta
-        //   startActivity (new Intent(this, GameAction.class));
+        // pelin aloitus napista -> uusi intent GameAction-luokasta
+        // viedään ruudunkoko extrana
+        Intent gameAction = new Intent(this, GameAction.class);
+        gameAction.putExtra("ruudunleveys", ruutukoko.x);
+        gameAction.putExtra("ruudunkorkeus", ruutukoko.y);
+        startActivity(gameAction);
     }
 }

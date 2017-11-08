@@ -28,10 +28,14 @@
 
     <Button
         android:id="@+id/starttinappi"
-
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:fontFamily="serif-monospace"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
-        android:layout_height="200px"
-        android:text="Käynnistä ruohonleikkuri"
+        android:layout_height="180px"
+        android:autoSizeTextType="uniform"
+        android:textColor="#FFF"
+        android:text="Aloita ruohonleikkuu"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
