@@ -39,7 +39,12 @@ public class GameView extends SurfaceView implements Runnable{
     }
 
     public void pause() {
-
+        // pelimenossa false -> stop thread
+        pelimenossa = false;
+        try {
+            peliThread.join();
+        } catch (InterruptedException e){
+        }
     }
 
     public void resume() {
