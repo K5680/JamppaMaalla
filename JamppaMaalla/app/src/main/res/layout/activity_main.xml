@@ -28,15 +28,13 @@
 
     <Button
         android:id="@+id/starttinappi"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:fontFamily="serif-monospace"
         android:textStyle="bold"
         android:layout_width="wrap_content"
-        android:layout_height="180px"
-        android:autoSizeTextType="uniform"
+        android:layout_height="50dp"
+        android:textSize="20sp"
         android:textColor="#FFF"
+        android:background="@color/colorAccent"
         android:text="Aloita ruohonleikkuu"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

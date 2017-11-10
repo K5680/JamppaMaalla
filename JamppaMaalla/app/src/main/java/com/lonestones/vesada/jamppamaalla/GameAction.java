@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 /**
  * Created by Vesada on 8.11.2017.
  */
+// manifestiin lisätty: <activity android:name=".GameAction"></activity>
 
 public class GameAction extends AppCompatActivity{
     // declare gameview
@@ -16,11 +17,11 @@ public class GameAction extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        // get screensize extras
+        // get nappaa ruudunkoko-extrat
         Bundle gameAction = getIntent().getExtras();
         int ruudunleveys = gameAction.getInt("ruudunleveys");
         int ruudunkorkeus = gameAction.getInt("ruudunkorkeus");
-        // init game view object
+
         // pass screen size to GameView constructor
         gameView = new GameView(this, ruudunleveys, ruudunkorkeus);
         setContentView(gameView); // sets the content of the view (=gameView) to screen

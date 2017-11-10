@@ -11,15 +11,23 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Shader;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
+
+
+/**
+ * Created by Vesada on 6.11.2017.
+ * student.jamk.fi/~K5680
+ */
 
 
 // implementoidaan View OnClickListenerillä -> onko käyttäjä "klikannut"
@@ -30,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Display ruutu;
     private Point ruutukoko;
 
+    private Handler handler;
+    private boolean jamppaFrame;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +49,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // ruutu landscape-asentoon
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        piirraAlkuvalikko();
-    }
-
-
-
-    public void piirraAlkuvalikko(){
         // get display object. Display = size and density of a logical display
         ruutu = getWindowManager().getDefaultDisplay();
 
@@ -51,7 +56,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ruutukoko = new Point();   // point = two integer coordinates
         ruutu.getSize(ruutukoko);      // gets display size = current _app window_ size
 
+        piirraAlkuvalikko();
 
+        // Jamppa-animator with handler
+        jamppaFrame = true;
+        handler = new Handler() ;
+
+    }
+
+
+
+    public void piirraAlkuvalikko(){
         // "aloitusnappi" näytölle
         aloitusNappi = (Button) findViewById(R.id.starttinappi);
         // ja nappiin clickListener
@@ -151,7 +166,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alkukuvaView.setImageBitmap(bitmappi);
     }
 
-    // muuta kirjaimet ruudun mukaan venyviksi, esim 1/4-osa ruutua korkeus ???
+
+
+    // frame change to jamppa
+    public Runnable runnable = new Runnable() {
+        public void run() {
+            if (jamppaFrame) {
+                jamppaFrame = false;
+            } else
+            {
+                jamppaFrame = true;
+            }
+
+            Log.d("jamppa frame change","jamppaFrame is"+jamppaFrame);
+            handler.postDelayed(runnable, 500);
+        }
+    };
+
 
     public void piirraA(Canvas canvas, float xsij, float ysij, Paint maali){
         // piirrä viivoilla A
@@ -174,7 +205,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         canvas.drawCircle(xsij+93,ysij-285,110, maali);
         canvas.drawCircle(xsij+93,ysij-285,70, peittomaali);
 
-        // drawArc & drawOval  require API 21
+        // drawArc & drawOval
+        // & drawRoundRect        require API 21
+
     }
 
     public void piirraL(Canvas canvas, float xsij, float ysij, Paint maali){
@@ -188,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view){
         // pelin aloitus napista -> uusi intent GameAction-luokasta
         // viedään ruudunkoko extrana
+
         Intent gameAction = new Intent(this, GameAction.class);
         gameAction.putExtra("ruudunleveys", ruutukoko.x);
         gameAction.putExtra("ruudunkorkeus", ruutukoko.y);
