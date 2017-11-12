@@ -3,9 +3,7 @@ package com.lonestones.vesada.jamppamaalla;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.os.SystemClock;
-import android.util.Log;
+
 
 import android.os.Handler;
 
@@ -36,7 +34,7 @@ public class Jamppa {
         x = 50;
         nopeus = 7;
 
-        // get bitmap from resources
+        // get bitmaps from resources
         jamppaBitmap = BitmapFactory.decodeResource(konteksti.getResources(), R.drawable.jamppa);
         jamppaBitmap2 = BitmapFactory.decodeResource(konteksti.getResources(), R.drawable.jamppa2);
 
@@ -44,7 +42,7 @@ public class Jamppa {
         yMax = ruudunkorkeus - jamppaBitmap.getHeight();
         // y at bottom
         y = yMax;
-        yMin = 150; // tämä säädettävä oikein myöhemmin
+        yMin = 70; // tämä säädettävä oikein myöhemmin
 
         // moves
         meneeYlos = true;
@@ -64,21 +62,21 @@ public class Jamppa {
         };
         runnable.run();
 
-
+        // vaihtoehtoisia lataustapoja:
         // base  = getDocumentBase();
         // hahmo = getImage(base, "data/kuva.png");
 
         // anim = new Animaatio();
         // anim.addFrame(kuva, 50); // = frame + duration
 
-        // loading bitmap from SD CARD would be:
+        // SDcardilta lataaminen olisi näin:
         //        ImageView image = (ImageView) findViewById(R.id.test_image);
         //        Bitmap bMap = BitmapFactory.decodeFile("/sdcard/test2.png");
         //        image.setImageBitmap(bMap);
     }
 
 
-    // animate frames
+    // animate jamppa-frames
     public Bitmap getJamppaBitmap() {
         if (jamppaFrame) {
             return jamppaBitmap;

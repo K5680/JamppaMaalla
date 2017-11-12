@@ -17,7 +17,7 @@ public class GameAction extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        // get nappaa ruudunkoko-extrat
+        // nappaa ruudunkoko-extrat
         Bundle gameAction = getIntent().getExtras();
         int ruudunleveys = gameAction.getInt("ruudunleveys");
         int ruudunkorkeus = gameAction.getInt("ruudunkorkeus");

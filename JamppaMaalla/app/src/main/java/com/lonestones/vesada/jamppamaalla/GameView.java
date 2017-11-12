@@ -56,7 +56,7 @@ public class GameView extends SurfaceView implements Runnable{
         maali = new Paint();    // paints for drawing
         maali2 = new Paint();
 
-        int rockCount = 10;
+        int rockCount = 5;
         for (int i = 0; i < rockCount; i++){
             Rock kivi = new Rock(konteksti, ruudunleveys, ruudunkorkeus);
             rocks.add(kivi);
@@ -87,8 +87,8 @@ public class GameView extends SurfaceView implements Runnable{
             canvas.drawColor(Color.argb(255, 100, 170, 50));
 
             // sky
-            maali2.setColor(Color.argb(255, 140, 160, 255));
-            canvas.drawRect(0,0,ruudunlev,300,maali2);
+            maali2.setColor(Color.argb(255, 60, 190, 255));
+            canvas.drawRect(0,0,ruudunlev,200,maali2);
 
 
             // draw rocks
@@ -106,9 +106,6 @@ public class GameView extends SurfaceView implements Runnable{
                     jamppa.getX(),
                     jamppa.getY(),
                     maali);
-
-
-
 
             // UNLOCK canvas
             surfaceHolder.unlockCanvasAndPost(canvas);  // "flip screen?"
@@ -160,11 +157,12 @@ public class GameView extends SurfaceView implements Runnable{
         switch (liikeEventti.getAction() & MotionEvent.ACTION_MASK){
             case MotionEvent.ACTION_UP:
                 jamppa.meneYlos();
-                int r = jamppa.getY();
-                Log.d("MyTagGoesHere", "going up"+r);
+
                 break;
             case MotionEvent.ACTION_DOWN:
                 jamppa.meneAlas();
+                int r = jamppa.getY();
+                Log.d("MyTagGoesHere", "jamppa alas"+r);
                 break;
         }
         return true;
