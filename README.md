@@ -1,3 +1,4 @@
 "# JamppaMaalla"
-Android Graphics research / game project.
+Android Graphics research / game project. 
+
 ...to be continued with libGDX...
